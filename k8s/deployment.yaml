@@ -1,0 +1,32 @@
+# Aplicação web
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: estrongbelgier/convpeso:v1
+          ports:
+            - containerPort: 3000
+---
+# Service para expor a aplicação web
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 80
+      targetPort: 3000 # Porta do container web
+      type: NodePort
